@@ -53,7 +53,9 @@ RUN apt-get update && apt-get install -y \
 
 ENV LDFLAGS "-static -static-libgcc"
 
-RUN git clone --depth 1 https://gitlab.com/AOMediaCodec/SVT-AV1.git && \
+ARG SVT_AV1_VERSION="v1.7.0"
+
+RUN git clone --depth 1 -b $SVT_AV1_VERSION https://gitlab.com/AOMediaCodec/SVT-AV1.git && \
     cd ./SVT-AV1/Build/linux && \
     ./build.sh release static
 

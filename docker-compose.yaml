@@ -3,5 +3,4 @@ version: '3.3'
 services:
   av1an:
     image: xescure/av1an
-    user: "${UID}:${GID}"
-    
+    build: .
