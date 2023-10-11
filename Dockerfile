@@ -41,13 +41,30 @@ RUN cargo build --release && \
     mv ./target/release/av1an /usr/local/bin && \
     cd .. && rm -rf ./Av1an
 
+# Build svt-av1
+FROM buildpack-deps:jammy as build-svt-av1
 
+WORKDIR /app
+
+RUN apt-get update && apt-get install -y \
+    cmake \
+    yasm \
+    && rm -rf /var/lib/apt/lists/*
+
+ENV LDFLAGS "-static -static-libgcc"
+
+RUN git clone --depth 1 https://gitlab.com/AOMediaCodec/SVT-AV1.git && \
+    cd ./SVT-AV1/Build/linux && \
+    ./build.sh release static
+
+# Build final container
 FROM base AS runtime
 
 ENV MPLCONFIGDIR="/home/app_user/"
 
 COPY --from=build /usr/local/bin/rav1e /usr/local/bin/rav1e
 COPY --from=build /usr/local/bin/av1an /usr/local/bin/av1an
+COPY --from=build-svt-av1 /app/SVT-AV1/Bin/Release/SvtAv1EncApp /usr/local/bin/SvtAv1EncApp
 
 # Create user
 RUN useradd -ms /bin/bash app_user
