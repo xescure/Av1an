@@ -1,0 +1,3 @@
+#!/bin/bash
+
+docker run --privileged -v "$HOME/projects/cgtest:/videos" --user $(id -u):$(id -g) -it --rm xescure/av1an:svt-av1_v1.6.0 "$@"

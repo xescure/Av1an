@@ -1,0 +1,1 @@
+-i s02e01_test.mkv -c mkvmerge -a -c:a libopus -b:a 128K -e svt-av1 -v --preset 6 --crf 21 --film-grain 6 --film-grain-denoise 0 --tune 0 --enable-qm 1 --qm-min 0 --qm-max 15 --irefresh-type 1 --chroma-u-dc-qindex-offset -1 --chroma-u-ac-qindex-offset -1 --chroma-v-dc-qindex-offset -1 --chroma-v-ac-qindex-offset -1 -o s01e01_dav1an_3.mkv --workers 2
